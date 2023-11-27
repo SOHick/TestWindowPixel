@@ -1,3 +1,5 @@
+package Triangle;
+
 import java.awt.*;
 
 public interface Painter
