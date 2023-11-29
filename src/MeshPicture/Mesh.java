@@ -6,13 +6,11 @@ import java.awt.*;
 public class Mesh extends JPanel
 {
     private final int[] P={500,250,750,250,700,50,350,100};
-
     int th = 2;
     String Ox;
     String Oy;
     double scala = Math.pow(10,1);
     int xCenter, yCenter;
-
     double xMin = -10 , yMin =-10;
     double xMax = 10, yMax = 10;
     int mainWidth;
@@ -28,10 +26,17 @@ public class Mesh extends JPanel
     }
     public void MeshPolygon(Graphics g)
     {
+        double x = 1;
+        double y = 1;
         DrawXAxis(mainHeight, g);
         DrawYAxis(mainWidth, g);
         SingleRectangle(g);
         NewRectangle(g);
+        double ksi = F1(x,y,a.xScr2Crt(P[0]))+F2(x,y,a.xScr2Crt(P[2]))+F3(x,y,a.xScr2Crt(P[4]))+F4(x,y,a.xScr2Crt(P[6]));
+        double eta = F1(x,y,a.xScr2Crt(P[1]))+F2(x,y,a.xScr2Crt(P[3]))+F3(x,y,a.xScr2Crt(P[5]))+F4(x,y,a.xScr2Crt(P[7]));
+        System.out.println(a.xCrt2Scr(ksi));
+        System.out.println(a.xCrt2Scr(eta));
+
     }
     public void SingleRectangle(Graphics g)
     {
@@ -209,77 +214,20 @@ public class Mesh extends JPanel
             }
         }
     }
-    public double F1(double v, String coordinate)
+    public double F1(double x,double y,double P)
     {
-        double F = 0;
-        switch (coordinate)
-        {
-            case "x":
-            {
-                F = ((v-1)*(a.yScr2Crt(P[1])-1))/4;
-                break;
-            }
-            case "y":
-            {
-                F =(a.xScr2Crt(P[0])-1)*(v-1)/4;
-                break;
-            }
-        }
-        return F;
+        return (x-1)*(y-1)*P/4;
     }
-    public double F2(double v,String coordinate)
+    public double F2(double x,double y,double P)
     {
-        double F = 0;
-        switch (coordinate)
-        {
-            case "x":
-            {
-                F = -(v+1)*(a.yScr2Crt(P[3])-1)/4;
-                break;
-            }
-            case "y":
-            {
-                F = -(a.xScr2Crt(P[2])+1)*(v-1)/4;
-                break;
-            }
-        }
-        return F;
+        return -(x+1)*(y-1)*P/4;
     }
-    public double F3(double v,String coordinate)
+    public double F3(double x,double y,double P)
     {
-        double F = 0;
-        switch (coordinate)
-        {
-            case "x":
-            {
-                F = (v+1)*(a.yScr2Crt(P[5])+1)/4;
-                break;
-            }
-            case "y":
-            {
-                F =(a.xScr2Crt(P[4])+1)*(v+1)/4;
-                break;
-            }
-        }
-        return F;
+        return (x+1)*(y+1)*P/4;
     }
-    public double F4(double v, String coordinate) // feature
+    public double F4(double x, double y,double P) // feature
     {
-        double F = 0;
-        switch (coordinate)
-        {
-            case "x":
-            {
-                F = -(v-1)*(a.yScr2Crt(P[7])+1)/4;
-                break;
-            }
-            case "y":
-            {
-                F = -(a.xScr2Crt(P[6])-1)*(v+1)/4;
-                break;
-            }
-        }
-        return F;
+        return -(x-1)*(y+1)*P/4;
     }
-
 }
