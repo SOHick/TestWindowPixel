@@ -1,12 +1,11 @@
 package MeshPicture;
-
 import javax.swing.*;
 import java.awt.*;
-
 public class Mesh extends JPanel
 {
     private final int[] P={500,250,750,250,700,50,350,100};
     int th = 2;
+    double DN = 0.2;
     String Ox;
     String Oy;
     double scala = Math.pow(10,1);
@@ -30,25 +29,47 @@ public class Mesh extends JPanel
         double y = 1;
         DrawXAxis(mainHeight, g);
         DrawYAxis(mainWidth, g);
-        SingleRectangle(g);
-        NewRectangle(g);
-        double ksi = F1(x,y,a.xScr2Crt(P[0]))+F2(x,y,a.xScr2Crt(P[2]))+F3(x,y,a.xScr2Crt(P[4]))+F4(x,y,a.xScr2Crt(P[6]));
-        double eta = F1(x,y,a.xScr2Crt(P[1]))+F2(x,y,a.xScr2Crt(P[3]))+F3(x,y,a.xScr2Crt(P[5]))+F4(x,y,a.xScr2Crt(P[7]));
-        System.out.println(a.xCrt2Scr(ksi));
-        System.out.println(a.xCrt2Scr(eta));
+        MainRectangle(g);
+        NewRectangleMesh(g);
 
+//        double ksi = F1(x,y,a.xScr2Crt(P[0]))+F2(x,y,a.xScr2Crt(P[2]))+F3(x,y,a.xScr2Crt(P[4]))+F4(x,y,a.xScr2Crt(P[6]));
+//        double eta = F1(x,y,a.xScr2Crt(P[1]))+F2(x,y,a.xScr2Crt(P[3]))+F3(x,y,a.xScr2Crt(P[5]))+F4(x,y,a.xScr2Crt(P[7]));
+//        System.out.println(a.xCrt2Scr(ksi));
+//        System.out.println(a.xCrt2Scr(eta));
     }
+    public void MainRectangle(Graphics g)
+    {
+        SingleRectangle(g);
+        for(double i = DN-1; i < 1;i+=DN)
+        {
+            double j = Math.ceil(i * scala) / scala;
+            g.drawLine(a.xCrt2Scr(j),a.yCrt2Scr(-1),a.xCrt2Scr(j),a.yCrt2Scr(1));
+            g.drawLine(a.xCrt2Scr(-1),a.yCrt2Scr(j),a.xCrt2Scr(1),a.yCrt2Scr(j));
+
+        }
+    }
+
     public void SingleRectangle(Graphics g)
     {
         int[] xPoints ={a.xCrt2Scr(-1),a.xCrt2Scr(1),a.xCrt2Scr(1),a.xCrt2Scr(-1)};
         int[] yPoints = {a.yCrt2Scr(-1),a.yCrt2Scr(-1), a.yCrt2Scr(1), a.yCrt2Scr(1)};
         g.drawPolygon(xPoints,yPoints,xPoints.length);
     }
-    public void NewRectangle(Graphics g)
+    public void NewRectangleMesh(Graphics g)
     {
         int[] xPoints ={P[0],P[2],P[4],P[6]};
         int[] yPoints = {P[1],P[3], P[5], P[7]};
         g.drawPolygon(xPoints,yPoints,xPoints.length);
+        for(double i = DN-1; i < 1;i+=DN)
+        {
+            double j = Math.ceil(i * scala) / scala;
+            for(double k = DN-1; k < 1;k+=DN)
+            {
+                double l = Math.ceil(k * scala) / scala;
+
+
+            }
+        }
     }
 
     public void DrawXAxis (int height,Graphics g)
