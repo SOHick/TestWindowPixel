@@ -28,7 +28,7 @@ public class Mesh extends JPanel
         DrawXAxis(mainHeight, g);
         DrawYAxis(mainWidth, g);
         MainRectangle(g);
-        NewRectangleMesh(g);
+        NewRectangleMesh(g,P);
     }
     public void MainRectangle(Graphics g)
     {
@@ -48,7 +48,7 @@ public class Mesh extends JPanel
         int[] yPoints = {a.yCrt2Scr(-1),a.yCrt2Scr(-1), a.yCrt2Scr(1), a.yCrt2Scr(1)};
         g.drawPolygon(xPoints,yPoints,xPoints.length);
     }
-    public void NewRectangleMesh(Graphics g)
+    public void NewRectangleMesh(Graphics g,int[] P)
     {
         int[] xPoints ={P[0],P[2],P[4],P[6]};
         int[] yPoints = {P[1],P[3], P[5], P[7]};
