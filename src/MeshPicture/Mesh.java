@@ -25,17 +25,10 @@ public class Mesh extends JPanel
     }
     public void MeshPolygon(Graphics g)
     {
-        double x = 1;
-        double y = 1;
         DrawXAxis(mainHeight, g);
         DrawYAxis(mainWidth, g);
         MainRectangle(g);
         NewRectangleMesh(g);
-
-//        double ksi = F1(x,y,a.xScr2Crt(P[0]))+F2(x,y,a.xScr2Crt(P[2]))+F3(x,y,a.xScr2Crt(P[4]))+F4(x,y,a.xScr2Crt(P[6]));
-//        double eta = F1(x,y,a.xScr2Crt(P[1]))+F2(x,y,a.xScr2Crt(P[3]))+F3(x,y,a.xScr2Crt(P[5]))+F4(x,y,a.xScr2Crt(P[7]));
-//        System.out.println(a.xCrt2Scr(ksi));
-//        System.out.println(a.xCrt2Scr(eta));
     }
     public void MainRectangle(Graphics g)
     {
@@ -63,12 +56,19 @@ public class Mesh extends JPanel
         for(double i = DN-1; i < 1;i+=DN)
         {
             double j = Math.ceil(i * scala) / scala;
-            for(double k = DN-1; k < 1;k+=DN)
-            {
-                double l = Math.ceil(k * scala) / scala;
+            double y=-1;
+            double OYksi1 = F1(j,y,a.xScr2Crt(P[0]))+F2(j,y,a.xScr2Crt(P[2]))+F3(j,y,a.xScr2Crt(P[4]))+F4(j,y,a.xScr2Crt(P[6]));
+            double OYeta1 = F1(j,y,a.xScr2Crt(P[1]))+F2(j,y,a.xScr2Crt(P[3]))+F3(j,y,a.xScr2Crt(P[5]))+F4(j,y,a.xScr2Crt(P[7]));
+            double OYksi2 = F1(j,-y,a.xScr2Crt(P[0]))+F2(j,-y,a.xScr2Crt(P[2]))+F3(j,-y,a.xScr2Crt(P[4]))+F4(j,-y,a.xScr2Crt(P[6]));
+            double OYeta2 = F1(j,-y,a.xScr2Crt(P[1]))+F2(j,-y,a.xScr2Crt(P[3]))+F3(j,-y,a.xScr2Crt(P[5]))+F4(j,-y,a.xScr2Crt(P[7]));
 
+            double OXksi1 = F1(y,j,a.xScr2Crt(P[0]))+F2(y,j,a.xScr2Crt(P[2]))+F3(y,j,a.xScr2Crt(P[4]))+F4(y,j,a.xScr2Crt(P[6]));
+            double OXeta1 = F1(y,j,a.xScr2Crt(P[1]))+F2(y,j,a.xScr2Crt(P[3]))+F3(y,j,a.xScr2Crt(P[5]))+F4(y,j,a.xScr2Crt(P[7]));
+            double OXksi2 = F1(-y,j,a.xScr2Crt(P[0]))+F2(-y,j,a.xScr2Crt(P[2]))+F3(-y,j,a.xScr2Crt(P[4]))+F4(-y,j,a.xScr2Crt(P[6]));
+            double OXeta2 = F1(-y,j,a.xScr2Crt(P[1]))+F2(-y,j,a.xScr2Crt(P[3]))+F3(-y,j,a.xScr2Crt(P[5]))+F4(-y,j,a.xScr2Crt(P[7]));
+            g.drawLine(a.xCrt2Scr(OYksi1),a.xCrt2Scr(OYeta1),a.xCrt2Scr(OYksi2),a.xCrt2Scr(OYeta2));
+            g.drawLine(a.xCrt2Scr(OXksi1),a.xCrt2Scr(OXeta1),a.xCrt2Scr(OXksi2),a.xCrt2Scr(OXeta2));
 
-            }
         }
     }
 
@@ -247,7 +247,7 @@ public class Mesh extends JPanel
     {
         return (x+1)*(y+1)*P/4;
     }
-    public double F4(double x, double y,double P) // feature
+    public double F4(double x, double y,double P)
     {
         return -(x-1)*(y+1)*P/4;
     }
