@@ -1,9 +1,9 @@
-package MeshPicture;
+package MeshPictureRectangle;
 import java.io.*;
 
 public class dataGet
 {
-    private final String FILE = "C:\\Users\\nikit\\IdeaProjects\\TestWindowPixel\\src\\MeshPicture\\fileInfo\\data.txt";
+    private final String FILE = "C:\\Users\\nikit\\IdeaProjects\\TestWindowPixel\\src\\MeshPictureRectangle\\fileInfo\\data.txt";
     private double[][] nodes;
     private int[][] elems;
     private  int nElems;

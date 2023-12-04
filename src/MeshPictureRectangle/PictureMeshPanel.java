@@ -1,4 +1,4 @@
-package MeshPicture;
+package MeshPictureRectangle;
 
 import javax.swing.*;
 import java.awt.*;

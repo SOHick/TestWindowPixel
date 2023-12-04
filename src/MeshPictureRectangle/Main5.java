@@ -1,6 +1,4 @@
-package MeshPicture;
-
-import GrayScale.MainGraphicsGray;
+package MeshPictureRectangle;
 
 public class Main5
 {

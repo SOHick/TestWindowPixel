@@ -1,4 +1,4 @@
-package MeshPicture;
+package MeshPictureRectangle;
 
 public class Convector
 {
