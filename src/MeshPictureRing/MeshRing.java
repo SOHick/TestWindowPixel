@@ -2,21 +2,25 @@ package MeshPictureRing;
 import MeshPictureRectangle.Convector;
 import java.awt.*;
 
+
 public class MeshRing
 {
     int th = 2;
-    double DN = 0.2;
+    double DN = 0.4;
     String Ox;
     String Oy;
     double scala = Math.pow(10,1);
     int xCenter, yCenter;
-    int DXY = 10;
+    int DXY = 5;
     double xMin = -DXY , yMin =-DXY;
     double xMax = DXY, yMax = DXY;
     int mainWidth;
     int mainHeight;
-    double [][] PointXY;
+    double [][] PointXY,MeshPointXY;
+    int[][] connectivity,MeshConnectivity;
+
     Convector a;
+    int[] P;
 
     public MeshRing(Graphics g, int width, int height)
     {
@@ -32,15 +36,33 @@ public class MeshRing
         MeshPictureRing2(1,4,12,g);
 
     }
+    public void MeshArray(int[] P,int b)
+    {
+
+        for(double i = -1; i <= 1;i+=DN)
+        {
+            double j = Math.ceil(i * scala) / scala;
+            for(double k = -1; k < 1;k+=DN)
+            {
+                double m = Math.ceil(k * scala) / scala;
+
+                double ksi1 = F1(j,m,a.xScr2Crt(P[0]))+F2(j,m,a.xScr2Crt(P[2]))+F3(j,m,a.xScr2Crt(P[4]))+F4(j,m,a.xScr2Crt(P[6]));
+                double eta1 = F1(j,m,a.xScr2Crt(P[1]))+F2(j,m,a.xScr2Crt(P[3]))+F3(j,m,a.xScr2Crt(P[5]))+F4(j,m,a.xScr2Crt(P[7]));
+                MeshPointXY[b][0] =ksi1;
+                MeshPointXY[b][1] =eta1;
+                b=b+1;
+            }
+        }
+    }
 
     public void MeshPictureRing2(double r,double R,int N,Graphics g)
     {
+        MeshConnectivity = new int[N*DXY*DXY][4];
         double teta = (2*Math.PI)/N; // Угол поворота
-        int[][] connectivity = new int[N][4];
+        connectivity = new int[N*DXY*DXY][4];
         double [][] PointXYR = PointRing(N,R,teta,g);
         double [][] PointXYr = PointRing(N,r,teta,g);
-        int p = N*N;
-        PointXY = new double[p][2]; // all Points
+        PointXY = new double[N*N][2]; // all Points
         PointXY[0][0] = PointXYR[0][0]; // 1
         PointXY[0][1] = PointXYR[0][1]; // 1
         for(int j =0; j <=N-1 ; j++)
@@ -58,45 +80,71 @@ public class MeshRing
         g.setColor(Color.black);
         for(int j =0; j<= N-2; j++)
         {
-            connectivity[j][0] = 2*j +1;
-            connectivity[j][1] = 2*j +2;
-            connectivity[j][2] = 2*j +4;
-            connectivity[j][3] = 2*j +3;
+            connectivity[j][0] = 2*j*DXY +DXY;
+            connectivity[j][1] = 2*j*DXY +2*DXY;
+            connectivity[j][2] = 2*j*DXY +4*DXY;
+            connectivity[j][3] = 2*j*DXY +3*DXY;
 
         }
-        connectivity[N-1][0] = 2*(N-2) +4;
-        connectivity[N-1][1] = 2*(N-2) +3;
-        connectivity[N-1][2] = 2;
-        connectivity[N-1][3] = 1;
+        connectivity[N-1][0] = 2*(N-2)*DXY + 4*DXY;
+        connectivity[N-1][1] = 2*(N-2)*DXY + 3*DXY;
+        connectivity[N-1][2] = 2*DXY;
+        connectivity[N-1][3] = DXY;
         MeshTwoRing(connectivity,PointXY,N,g);
 
     }
     public void MeshTwoRing(int[][] connectivity,double[][] PointXY,int N,Graphics g)
     {
-        for(int j =0; j<=N-1; j++)
+        int l = (int)(2/DN);
+        int valueStep= l*(l+1);
+        MeshPointXY = new double[valueStep*N][2];
+        for(int j =0; j<=N-1 ; j++)
         {
-            int p1x = connectivity[j][0] - 1;
-            int p2x = connectivity[j][1] - 1;
-            int p4x = connectivity[j][2] - 1;
-            int p3x = connectivity[j][3] - 1;
-            int[] P;
+            int p1x = connectivity[j][0] - DXY;
+            int p2x = connectivity[j][1] - DXY;
+            int p4x = connectivity[j][2] - DXY;
+            int p3x = connectivity[j][3] - DXY;
+           
             if(j<N-1) {
                 P = new int[]{
-                        a.xCrt2Scr(PointXY[p1x][0]), a.yCrt2Scr(PointXY[p1x][1]),
-                        a.xCrt2Scr(PointXY[p2x][0]), a.yCrt2Scr(PointXY[p2x][1]),
-                        a.xCrt2Scr(PointXY[p4x][0]), a.yCrt2Scr(PointXY[p4x][1]),
-                        a.xCrt2Scr(PointXY[p3x][0]), a.yCrt2Scr(PointXY[p3x][1]),
+                        a.xCrt2Scr(PointXY[p1x/DXY][0]), a.yCrt2Scr(PointXY[p1x/DXY][1]),
+                        a.xCrt2Scr(PointXY[p2x/DXY][0]), a.yCrt2Scr(PointXY[p2x/DXY][1]),
+                        a.xCrt2Scr(PointXY[p4x/DXY][0]), a.yCrt2Scr(PointXY[p4x/DXY][1]),
+                        a.xCrt2Scr(PointXY[p3x/DXY][0]), a.yCrt2Scr(PointXY[p3x/DXY][1]),
                 };
+                MeshArray(P, j*valueStep);
             }
-          else {
+           else
+           {
                 P = new int[]{
-                        a.xCrt2Scr(PointXY[p3x][0]), a.yCrt2Scr(PointXY[p3x][1]),
-                        a.xCrt2Scr(PointXY[p4x][0]), a.yCrt2Scr(PointXY[p4x][1]),
-                        a.xCrt2Scr(PointXY[p1x][0]), a.yCrt2Scr(PointXY[p1x][1]),
-                        a.xCrt2Scr(PointXY[p2x][0]), a.yCrt2Scr(PointXY[p2x][1]),
+                        a.xCrt2Scr(PointXY[p3x/DXY][0]), a.yCrt2Scr(PointXY[p3x/DXY][1]),
+                        a.xCrt2Scr(PointXY[p4x/DXY][0]), a.yCrt2Scr(PointXY[p4x/DXY][1]),
+                        a.xCrt2Scr(PointXY[p1x/DXY][0]), a.yCrt2Scr(PointXY[p1x/DXY][1]),
+                        a.xCrt2Scr(PointXY[p2x/DXY][0]), a.yCrt2Scr(PointXY[p2x/DXY][1]),
                 };
-            }
+               MeshArray(P, j*valueStep);
+           }
             NewRectangleMesh(g, P);
+        }
+
+        g.setColor(Color.green);
+        g.fillRect(a.xCrt2Scr(MeshPointXY[5][0]),a.xCrt2Scr(MeshPointXY[5][1]),6,6);
+        g.setColor(Color.green);
+        NewMeshConnectivity(N,l); // all rectangle mesh (228+-, при N=12, DN = 0.4)
+        System.out.println(MeshPointXY.length);
+    }
+    public void NewMeshConnectivity(int N, int l)// all rectangle mesh
+    {
+        for(int j = 0; j <19*N; j=j+5)
+        {
+            int n = j/l;
+            for(int k = 0; k < l ; k++)
+            {
+                MeshConnectivity[j+k][0] = k+ j + 1 + n;
+                MeshConnectivity[j+k][1] = k+ j + l + 1 + n;
+                MeshConnectivity[j+k][2] = k+ j + 2 + n;
+                MeshConnectivity[j+k][3] = k+ j + l + 2 + n;
+            }
         }
     }
     public double[][] PointRing(int N,double R,double teta,Graphics g)
@@ -292,6 +340,7 @@ public class MeshRing
         g.drawPolygon(xPoints,yPoints,xPoints.length);
         for(double i = DN-1; i < 1;i+=DN)
         {
+
             double j = Math.ceil(i * scala) / scala;
             double y=-1;
             double OYksi1 = F1(j,y,a.xScr2Crt(P[0]))+F2(j,y,a.xScr2Crt(P[2]))+F3(j,y,a.xScr2Crt(P[4]))+F4(j,y,a.xScr2Crt(P[6]));
