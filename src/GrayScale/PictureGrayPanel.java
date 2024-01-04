@@ -27,9 +27,9 @@ public class PictureGrayPanel extends JPanel
     }
     public void paintComponent(Graphics g)
     {
-     PictureGray(g);
-     KernelGray(g);
-     NormMatrix(g);
+        PictureGray(g);
+        KernelGray(g);
+        NormMatrix(g);
     }
     public void PictureGray(Graphics g)
     {
@@ -41,7 +41,7 @@ public class PictureGrayPanel extends JPanel
                 bufferImageGray.setRGB(x, y,Gray);
             }
         }
-//        g.drawImage(bufferImageGray, 0, 0, null);
+//        g.drawImage(bufferImageGray, 0, 0, null); // Переводит картинку в серый цвет
 //        g.dispose();
     }
     public void KernelGray(Graphics g)
@@ -199,7 +199,7 @@ public class PictureGrayPanel extends JPanel
 
                     }
                 }
-                 //bufferImageGray2.setRGB(x, y, getGrayScale(NormGradientClone[x][y]));
+                 //bufferImageGray2.setRGB(x, y, getGrayScale(NormGradientClone[x][y])); // Серая картинка
                 bufferImageGray2.setRGB(x, y, NormGradientClone[x][y]);
 
 

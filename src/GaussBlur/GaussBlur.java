@@ -11,7 +11,7 @@ public class GaussBlur extends JPanel
 {
     BufferedImage img = ImageIO.read(new File("C:\\Users\\nikit\\IdeaProjects\\TestWindowPixel\\src\\Pictures\\max.jpg"));
     BufferedImage bufferImageGauss=new BufferedImage(img.getWidth(), img.getHeight(),BufferedImage.TYPE_INT_RGB);
-    int radius = 6;
+    int radius = 6; // Основная зависимость
     double sigma = (double) radius / 2;
     double[][] kerG = new double[2*radius + 1][2*radius + 1];
     double sum = 0.0;

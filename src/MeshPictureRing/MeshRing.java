@@ -131,7 +131,6 @@ public class MeshRing
         g.fillRect(a.xCrt2Scr(MeshPointXY[5][0]),a.xCrt2Scr(MeshPointXY[5][1]),6,6);
         g.setColor(Color.green);
         NewMeshConnectivity(N,l); // all rectangle mesh (228+-, при N=12, DN = 0.4)
-        System.out.println(MeshPointXY.length);
     }
     public void NewMeshConnectivity(int N, int l)// all rectangle mesh
     {

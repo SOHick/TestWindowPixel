@@ -22,17 +22,18 @@ public class MainPanel extends JPanel
             g.drawLine(0,splittingNy*i,this.getWidth(),splittingNy*i);
         }
 
-         // drawSquare(dx,dy,splittingNx,splittingNy,g);
-        // drawLine(dx,dy,splittingNx,splittingNy,g);
+        //drawSquare(dx,dy,splittingNx,splittingNy,g);
+        //drawLine(dx,dy,splittingNx,splittingNy,g); //Рисование линии (в каждой точке своё значение)
 
-         drawTriangle(splittingNx,splittingNy,g);
+        //drawTriangle(splittingNx,splittingNy,g); // Закрашывание треугольника
+
         int x1=coeF;
         int y1=coeF;
         int x2=10*coeF;
         int y2=6*coeF;
         int x3=7*coeF;
         int y3=11*coeF; //1
-         drawTriangle2(x1,x2,x3,y1,y2,y3,splittingNx,splittingNy,g);
+        //drawTriangle2(x1,x2,x3,y1,y2,y3,splittingNx,splittingNy,g); // Лараби
 
     }
     public void drawSquare(int dx,int dy,int splittingNx ,int splittingNy, Graphics g)
@@ -57,7 +58,6 @@ public class MainPanel extends JPanel
 
         if(A >= B)
         {
-            System.out.println("22222");
             for(int j =0; j<=dx;j++) // x
             {
                 int i = (-C-A*j)/(B); // y
@@ -66,7 +66,6 @@ public class MainPanel extends JPanel
         }
         else if(A < B)
         {
-            System.out.println("33333");
             for(int i =0; i<=dy;i++) // y
             {
                 int j = (-C-B*i)/(A); // x
@@ -82,10 +81,10 @@ public class MainPanel extends JPanel
         int y2=6*coeF;
         int x3=7*coeF;
         int y3=11*coeF; // 1
-//        g.setColor(Color.PINK);
-//        FindPoint2(x1,x3,x2,y1,y3,y2,splittingNx,splittingNy,g);
-//        FindPoint3(x3,x2,x1,y3,y2,y1,splittingNx,splittingNy,g);
-//        g.setColor(Color.black);
+        g.setColor(Color.PINK);
+        FindPoint2(x1,x3,x2,y1,y3,y2,splittingNx,splittingNy,g);
+        FindPoint3(x3,x2,x1,y3,y2,y1,splittingNx,splittingNy,g);
+        g.setColor(Color.black);
     }
     public void FindPoint2(int x1,int x2,int x3,int y1,int y2,int y3,int splittingNx ,int splittingNy, Graphics g)
     {
