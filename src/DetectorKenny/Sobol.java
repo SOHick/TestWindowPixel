@@ -1,33 +1,26 @@
-package GrayScale;
+package DetectorKenny;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 
-public class PictureGrayPanel extends JPanel
+public class Sobol extends JPanel
 {
-    // Оператор Соболя
+
+    int[][] NormGradientClone;
+    BufferedImage bufferImageGray;
+    BufferedImage bufferImageGray2;
     BufferedImage img;
-
+    Graphics g;
+    public Sobol(BufferedImage img,Graphics g)
     {
-        try {
-            img = ImageIO.read(new File("C:\\Users\\nikit\\IdeaProjects\\TestWindowPixel\\src\\Pictures\\3d.jpg"));
-            //Чтобы поменять на обычный оператор Соболя поставить картинку 123.png
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        this.g= g;
+        this.img = img;
+        NormGradientClone = new int[img.getWidth()][img.getWidth()];
+        bufferImageGray = new BufferedImage(img.getWidth(), img.getHeight(),BufferedImage.TYPE_INT_RGB);
+        bufferImageGray2 = new BufferedImage(img.getWidth(), img.getHeight(),BufferedImage.TYPE_INT_RGB);
     }
-    int[][] NormGradient = new int[img.getWidth()][img.getWidth()];
-    int[][] NormGradientClone = new int[img.getWidth()][img.getWidth()];
-    BufferedImage bufferImageGray=new BufferedImage(img.getWidth(), img.getHeight(),BufferedImage.TYPE_INT_RGB);
-    BufferedImage bufferImageGray2=new BufferedImage(img.getWidth(), img.getHeight(),BufferedImage.TYPE_INT_RGB);
-    public PictureGrayPanel()  {
-
-    }
-    public void paintComponent(Graphics g)
+    public void paintSobol2(Graphics g)
     {
         PictureGray(g);
         KernelGray(g);
@@ -43,16 +36,15 @@ public class PictureGrayPanel extends JPanel
                 bufferImageGray.setRGB(x, y,Gray);
             }
         }
-//        g.drawImage(bufferImageGray, 0, 0, null); // Переводит картинку в серый цвет
-//        g.dispose();
+
     }
     public void KernelGray(Graphics g)
     {
 
         int[][] kerSX = {
-                {-1,0,1},
-                {-2,0,2},
-                {-1,0,1}
+                {1,0,-1},
+                {2,0,-2},
+                {1,0,-1}
         };
         int[][] kerSY = {
                 {1,2,1},
@@ -83,7 +75,6 @@ public class PictureGrayPanel extends JPanel
 
                 }
                 double gval = Math.sqrt((Gx * Gx) + (Gy * Gy));
-                NormGradient[x][y]= (int) gval;
                 NormGradientClone[x][y]= (int) gval;
             }
         }
@@ -92,9 +83,9 @@ public class PictureGrayPanel extends JPanel
     public void NormMatrix(Graphics g)
     {
         int[][] kerSX = {
-                {-1,0,1},
-                {-2,0,2},
-                {-1,0,1}
+                {1,0,-1},
+                {2,0,-2},
+                {1,0,-1}
         };
         int[][] kerSY = {
                 {1,2,1},
@@ -215,7 +206,7 @@ public class PictureGrayPanel extends JPanel
         int r = (rgb >> 16) & 0xff;
         int g = (rgb >> 8) & 0xff;
         int b = (rgb) & 0xff;
-        return (int)(0.2126 * r + 0.7152 * g + 0.0722 * b);
+        return (int)(0.299 * r + 0.587 * g + 0.114 * b);
     }
     public static int  getGrayScale(int rgb) {
         int r = (rgb >> 16) & 0xff;
@@ -228,10 +219,9 @@ public class PictureGrayPanel extends JPanel
         double gg = Math.pow(g / 255.0, 2.2);
         double bb = Math.pow(b / 255.0, 2.2);
         // Calculate luminance:
-        double lum = 0.2126 * rr + 0.7152 * gg + 0.0722 * bb;
+        double lum = 0.299 * rr + 0.587 * gg + 0.114 * bb;
         // Gamma compand and rescale to byte range:
         int grayLevel = (int) (255.0 * Math.pow(lum, 1.0 / 2.2));
         return (grayLevel << 16) + (grayLevel << 8) + grayLevel;
     }
-
 }

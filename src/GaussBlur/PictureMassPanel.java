@@ -20,10 +20,10 @@ public class PictureMassPanel extends JPanel
     }
     public void paintComponent(Graphics g)
     {
-      //Matrix3(g);
-        //g.drawImage(img, 0, 0, null);
-       double[][] kerG = gaussBlur.KerBlur();
-        gaussBlur.DrawBlur(g,kerG);
+//        Matrix3(g);
+//        g.drawImage(img, 0, 0, null);
+      double[][] kerG = gaussBlur.KerBlur();
+      gaussBlur.DrawBlur(g,kerG);
     }
     public void Matrix3(Graphics g)
     {

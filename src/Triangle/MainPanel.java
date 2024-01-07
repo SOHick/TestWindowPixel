@@ -33,7 +33,7 @@ public class MainPanel extends JPanel
         int y2=6*coeF;
         int x3=7*coeF;
         int y3=11*coeF; //1
-        //drawTriangle2(x1,x2,x3,y1,y2,y3,splittingNx,splittingNy,g); // Лараби
+        drawTriangle2(x1,x2,x3,y1,y2,y3,splittingNx,splittingNy,g); // Лараби
 
     }
     public void drawSquare(int dx,int dy,int splittingNx ,int splittingNy, Graphics g)
@@ -42,7 +42,7 @@ public class MainPanel extends JPanel
         {
             for(int j =0; j<=dy;j++)
             {
-                if(i>=1 && i<=5 && j>=1 && j<=5 )
+                if(i>=1 && i<=10 && j>=1 && j<=5 )
                 {
                     g.fillRect(splittingNx*i,splittingNy*j,splittingNx,splittingNy);
                 }
@@ -80,7 +80,7 @@ public class MainPanel extends JPanel
         int x2=10*coeF;
         int y2=6*coeF;
         int x3=7*coeF;
-        int y3=11*coeF; // 1
+        int y3=1*coeF; // 1
         g.setColor(Color.PINK);
         FindPoint2(x1,x3,x2,y1,y3,y2,splittingNx,splittingNy,g);
         FindPoint3(x3,x2,x1,y3,y2,y1,splittingNx,splittingNy,g);
