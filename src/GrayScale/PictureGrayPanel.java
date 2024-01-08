@@ -9,7 +9,7 @@ import java.io.IOException;
 
 public class PictureGrayPanel extends JPanel
 {
-    // Оператор Соболя
+    // Оператор Собеля
     BufferedImage img;
 
     {

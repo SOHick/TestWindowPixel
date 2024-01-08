@@ -8,7 +8,7 @@ public class PictureMeshPanel extends JPanel
 
     public void paintComponent(Graphics g)
     {
-        MeshTriangle(g);
+        //MeshTriangle(g);
         Mesh mesh = new Mesh(g,getWidth(),getHeight());
 
     }

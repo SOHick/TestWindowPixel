@@ -14,7 +14,7 @@ public class DetectorKenny extends JPanel
     BufferedImage img;
     {
         try {
-            img = ImageIO.read(new File("C:\\Users\\nikit\\IdeaProjects\\TestWindowPixel\\src\\Pictures\\123.png"));
+            img = ImageIO.read(new File("C:\\Users\\nikit\\IdeaProjects\\TestWindowPixel\\src\\Pictures\\3d.jpg"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

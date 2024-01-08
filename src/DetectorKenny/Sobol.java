@@ -193,13 +193,13 @@ public class Sobol extends JPanel
                     }
                 }
                 //bufferImageGray2.setRGB(x, y, getGrayScale(NormGradientClone[x][y])); // Серая картинка
-                bufferImageGray2.setRGB(x, y, NormGradientClone[x][y]);
+                //bufferImageGray2.setRGB(x, y, NormGradientClone[x][y]);
 
 
             }
         }
-        g.drawImage(bufferImageGray2, 0, 0, null);
-        g.dispose();
+//        g.drawImage(bufferImageGray2, 0, 0, null);
+//        g.dispose();
 
     }
     public static int  getGrayScaleBlue(int rgb) {

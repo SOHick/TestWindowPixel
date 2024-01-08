@@ -109,8 +109,8 @@ public class Gauss
 
             }
         }
-//        g.drawImage(bufferImageKenny, 0, 0, null);
-//        g.dispose();
+        g.drawImage(bufferImageKenny, 0, 0, null);
+        g.dispose();
         return bufferImageKenny;
 
 

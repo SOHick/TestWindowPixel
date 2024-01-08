@@ -48,8 +48,8 @@ public class MeshRing
 
                 double ksi1 = F1(j,m,a.xScr2Crt(P[0]))+F2(j,m,a.xScr2Crt(P[2]))+F3(j,m,a.xScr2Crt(P[4]))+F4(j,m,a.xScr2Crt(P[6]));
                 double eta1 = F1(j,m,a.xScr2Crt(P[1]))+F2(j,m,a.xScr2Crt(P[3]))+F3(j,m,a.xScr2Crt(P[5]))+F4(j,m,a.xScr2Crt(P[7]));
-                MeshPointXY[b][0] =ksi1;
-                MeshPointXY[b][1] =eta1;
+                MeshPointXY[b][0] = ksi1;
+                MeshPointXY[b][1] = eta1;
                 b=b+1;
             }
         }
@@ -59,8 +59,8 @@ public class MeshRing
     {
         MeshConnectivity = new int[N*DXY*DXY][4];
         double teta = (2*Math.PI)/N; // Угол поворота
-        connectivity = new int[N*DXY*DXY][4];
-        double [][] PointXYR = PointRing(N,R,teta,g);
+        connectivity = new int[N][4];
+        double [][] PointXYR = PointRing(N,R,teta,g); // Точки по краям окружности
         double [][] PointXYr = PointRing(N,r,teta,g);
         PointXY = new double[N*N][2]; // all Points
         PointXY[0][0] = PointXYR[0][0]; // 1
@@ -73,23 +73,23 @@ public class MeshRing
             PointXY[2*j+1][1]  =  PointXYr[j][1];
         }
         g.setColor(Color.blue);
-        for(int j =0; j<= N-1; j++)
+        for(int j =0; j<= N-1; j++) // Рисует синии линии
         {
             g.drawLine(a.xCrt2Scr(PointXYr[j][0]),a.yCrt2Scr(PointXYr[j][1]),a.xCrt2Scr(PointXYR[j][0]),a.yCrt2Scr(PointXYR[j][1]));
         }
         g.setColor(Color.black);
         for(int j =0; j<= N-2; j++)
         {
-            connectivity[j][0] = 2*j*DXY +DXY;
-            connectivity[j][1] = 2*j*DXY +2*DXY;
-            connectivity[j][2] = 2*j*DXY +4*DXY;
-            connectivity[j][3] = 2*j*DXY +3*DXY;
+            connectivity[j][0] = 2*j + 1;
+            connectivity[j][1] = 2*j + 2;
+            connectivity[j][2] = 2*j + 4;
+            connectivity[j][3] = 2*j + 3;
 
         }
-        connectivity[N-1][0] = 2*(N-2)*DXY + 4*DXY;
-        connectivity[N-1][1] = 2*(N-2)*DXY + 3*DXY;
-        connectivity[N-1][2] = 2*DXY;
-        connectivity[N-1][3] = DXY;
+        connectivity[N-1][0] = 2*(N-2) + 4;
+        connectivity[N-1][1] = 2*(N-2) + 3;
+        connectivity[N-1][2] = 2;
+        connectivity[N-1][3] = 1;
         MeshTwoRing(connectivity,PointXY,N,g);
 
     }
@@ -100,31 +100,31 @@ public class MeshRing
         MeshPointXY = new double[valueStep*N][2];
         for(int j =0; j<=N-1 ; j++)
         {
-            int p1x = connectivity[j][0] - DXY;
-            int p2x = connectivity[j][1] - DXY;
-            int p4x = connectivity[j][2] - DXY;
-            int p3x = connectivity[j][3] - DXY;
+            int p1x = connectivity[j][0] - 1;
+            int p2x = connectivity[j][1] - 1;
+            int p4x = connectivity[j][2] - 1;
+            int p3x = connectivity[j][3] - 1;
            
             if(j<N-1) {
                 P = new int[]{
-                        a.xCrt2Scr(PointXY[p1x/DXY][0]), a.yCrt2Scr(PointXY[p1x/DXY][1]),
-                        a.xCrt2Scr(PointXY[p2x/DXY][0]), a.yCrt2Scr(PointXY[p2x/DXY][1]),
-                        a.xCrt2Scr(PointXY[p4x/DXY][0]), a.yCrt2Scr(PointXY[p4x/DXY][1]),
-                        a.xCrt2Scr(PointXY[p3x/DXY][0]), a.yCrt2Scr(PointXY[p3x/DXY][1]),
+                        a.xCrt2Scr(PointXY[p1x][0]), a.yCrt2Scr(PointXY[p1x][1]),
+                        a.xCrt2Scr(PointXY[p2x][0]), a.yCrt2Scr(PointXY[p2x][1]),
+                        a.xCrt2Scr(PointXY[p4x][0]), a.yCrt2Scr(PointXY[p4x][1]),
+                        a.xCrt2Scr(PointXY[p3x][0]), a.yCrt2Scr(PointXY[p3x][1]),
                 };
-                MeshArray(P, j*valueStep);
+                MeshArray(P, j*valueStep); // Записывает в массив координаты точек внути каждого четырёх угольника
             }
            else
            {
                 P = new int[]{
-                        a.xCrt2Scr(PointXY[p3x/DXY][0]), a.yCrt2Scr(PointXY[p3x/DXY][1]),
-                        a.xCrt2Scr(PointXY[p4x/DXY][0]), a.yCrt2Scr(PointXY[p4x/DXY][1]),
-                        a.xCrt2Scr(PointXY[p1x/DXY][0]), a.yCrt2Scr(PointXY[p1x/DXY][1]),
-                        a.xCrt2Scr(PointXY[p2x/DXY][0]), a.yCrt2Scr(PointXY[p2x/DXY][1]),
+                        a.xCrt2Scr(PointXY[p3x][0]), a.yCrt2Scr(PointXY[p3x][1]),
+                        a.xCrt2Scr(PointXY[p4x][0]), a.yCrt2Scr(PointXY[p4x][1]),
+                        a.xCrt2Scr(PointXY[p1x][0]), a.yCrt2Scr(PointXY[p1x][1]),
+                        a.xCrt2Scr(PointXY[p2x][0]), a.yCrt2Scr(PointXY[p2x][1]),
                 };
-               MeshArray(P, j*valueStep);
+               MeshArray(P, j*valueStep); // Записывает в массив координаты точек внути каждого четырёх угольника
            }
-            NewRectangleMesh(g, P);
+            NewRectangleMesh(g, P); // Разбивает на прямоугольник внутри большого прямоугольника
         }
 
         g.setColor(Color.green);
@@ -332,7 +332,7 @@ public class MeshRing
             }
         }
     }
-    public void NewRectangleMesh(Graphics g,int[] P)
+    public void NewRectangleMesh(Graphics g,int[] P) // Разбиение прямоугольника
     {
         int[] xPoints ={P[0],P[2],P[4],P[6]};
         int[] yPoints = {P[1],P[3], P[5], P[7]};

@@ -26,14 +26,19 @@ public class MainPanel extends JPanel
         //drawLine(dx,dy,splittingNx,splittingNy,g); //Рисование линии (в каждой точке своё значение)
 
         //drawTriangle(splittingNx,splittingNy,g); // Закрашывание треугольника
+        LineBresenham lineBresenham = new LineBresenham();
+        lineBresenham.Bresenham2(0,20,40,0,splittingNx,splittingNy,g);
+        g.setColor(Color.cyan);
+        g.drawLine(0,210,420,0);
+        g.setColor(Color.black);
 
-        int x1=coeF;
-        int y1=coeF;
-        int x2=10*coeF;
-        int y2=6*coeF;
-        int x3=7*coeF;
-        int y3=11*coeF; //1
-        drawTriangle2(x1,x2,x3,y1,y2,y3,splittingNx,splittingNy,g); // Лараби
+//        int x1=coeF;
+//        int y1=coeF;
+//        int x2=10*coeF;
+//        int y2=6*coeF;
+//        int x3=7*coeF;
+//        int y3=11*coeF; //1
+//        drawTriangle2(x1,x2,x3,y1,y2,y3,splittingNx,splittingNy,g); // Лараби
 
     }
     public void drawSquare(int dx,int dy,int splittingNx ,int splittingNy, Graphics g)
